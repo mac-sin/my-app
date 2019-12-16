@@ -9,6 +9,7 @@ function App() {
   return (
     <Router>
       <div>
+        <div>https://mac-sin.github.io/my-app/</div>
         <Header />
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
