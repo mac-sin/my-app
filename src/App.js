@@ -4,6 +4,7 @@
 // Nested Routing
 import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import NavBar from './components/NavBar';
 
 const Login = () => {
   return <div className="container"><h2>Login</h2></div>;
@@ -51,30 +52,11 @@ const Topic = ({ match }) => {
   );
 }
 
-const Header = ({ match }) => {
-  return (
-    <ul className="nav-bar">
-      <li>
-        <NavLink exact to="/" activeClassName="active">Home</NavLink>
-      </li>
-      <li>
-        <NavLink to="/about" activeClassName="active">About</NavLink>
-      </li>
-      <li>
-        <NavLink to="/topics" activeClassName="active">Topics</NavLink>
-      </li>
-      <li>
-        <NavLink to="/login" activeClassName="active">Login</NavLink>
-      </li>
-    </ul>
-  );
-}
-
 const App = () => {
   return (
     <Router>
       <div>
-        <Header />
+        <NavBar />
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
