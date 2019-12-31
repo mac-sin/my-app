@@ -5,6 +5,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import NavBar from './components/NavBar';
+import Todos from './pages/Todos';
+import { Layout } from 'antd';
+const { Content, Footer } = Layout;
+
 
 const Login = () => {
   return <div className="container"><h2>Login</h2></div>;
@@ -55,14 +59,18 @@ const Topic = ({ match }) => {
 const App = () => {
   return (
     <Router>
-      <div>
+      <Layout className="layout">
         <NavBar />
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
-        <Route path="/login" component={Login} />
-        <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
-      </div>
+        <Content style={{ padding: '0 50px', marginTop: 64 }}>
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/todos" component={Todos} />
+          <Route path="/topics" component={Topics} />
+          <Route path="/login" component={Login} />
+          <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
+        </Content>
+      </Layout>
+      <Footer/>
     </Router>
   );
 }
