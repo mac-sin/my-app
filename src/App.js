@@ -2,37 +2,44 @@
 // https://reacttraining.com/react-router/web/guides/quick-start
 
 // Nested Routing
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
-function App() {
+const Login = () => {
+  return <div className="container"><h2>Login</h2></div>;
+}
+
+const Home = () => {
+  return <div className="container"><h2>Home</h2></div>;
+}
+
+const About = () => {
+  return <div className="container"><h2>About</h2></div>;
+}
+
+const Topics = ({ match }) => {
   return (
-    <Router>
-      <div>
-        <div>https://mac-sin.github.io/my-app/</div>
-        <Header />
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/topics" component={Topics} />
-        <Route path="/login" component={Login} />
-      </div>
-    </Router>
+    <div className="container">
+      <h2>Topics</h2>
+      <ul className="nav-bar">
+        <li>
+          <NavLink to={`${match.url}/components/en`} activeClassName="active">Components</NavLink>
+        </li>
+        <li>
+          <NavLink to={`${match.url}/props-v-state/zht`} activeClassName="active">Props v. State</NavLink>
+        </li>
+      </ul>
+      <Route path={`${match.path}/:id/:lang/`} component={Topic} />
+      <Route
+        exact
+        path={match.path}
+        render={() => <h3>Please select a topic.</h3>}
+      />
+    </div>
   );
 }
 
-function Login() {
-  return <h2>Login</h2>;
-}
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Topic({ match }) {
+const Topic = ({ match }) => {
   console.log(match);
   return (
     <div>
@@ -44,46 +51,37 @@ function Topic({ match }) {
   );
 }
 
-function Topics({ match }) {
+const Header = ({ match }) => {
   return (
-    <div>
-      <h2>Topics</h2>
-
-      <ul>
-        <li>
-          <Link to={`${match.url}/components/en`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/props-v-state/zht`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Route path={`${match.path}/:id/:lang/`} component={Topic} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a topic.</h3>}
-      />
-    </div>
+    <ul className="nav-bar">
+      <li>
+        <NavLink exact to="/" activeClassName="active">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/about" activeClassName="active">About</NavLink>
+      </li>
+      <li>
+        <NavLink to="/topics" activeClassName="active">Topics</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login" activeClassName="active">Login</NavLink>
+      </li>
+    </ul>
   );
 }
 
-const Header = () => {
+const App = () => {
   return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
-      <li>
-        <Link to="/topics">Topics</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
+    <Router>
+      <div>
+        <Header />
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/topics" component={Topics} />
+        <Route path="/login" component={Login} />
+        <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
+      </div>
+    </Router>
   );
 }
 
