@@ -24,6 +24,7 @@ class Todo extends Component {
     render() { 
         let content = ( this.state.post )? (
             <div>
+                <p>userId: { this.state.post.userId }</p>
                 <h3>{ this.state.post.title }</h3>
                 <p>{ this.state.post.body }</p>
             </div>

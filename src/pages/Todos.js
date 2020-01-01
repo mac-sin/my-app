@@ -58,6 +58,7 @@ class Todos extends Component {
                             <div className="icon-container">
                                 <img className="icon-image" src={IconImage} alt="icon" />
                             </div>
+                            <p>userId: {post.userId}</p>
                             <p>{post.body}</p>
                             <Link to={'/todos/'+post.id}>
                                 <Button type="primary">Detail: {post.id}</Button>
