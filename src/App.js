@@ -11,7 +11,7 @@ import Rainbow from './hoc/Rainbow';
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
 
-const Login = () => {
+const Login = (props) => {
   return <div className="container"><h2>Login</h2></div>;
 }
 
@@ -20,11 +20,13 @@ const Home = (props) => {
   return <div className="container"><h2>Home</h2></div>;
 }
 
-const About = () => {
+const About = (props) => {
+  console.log(props)
   return <div className="container"><h2>About</h2></div>;
 }
 
 const Topics = ({ match }) => {
+
   return (
     <div className="container">
       <h2>Topics</h2>

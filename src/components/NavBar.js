@@ -24,7 +24,10 @@ const NavBar = () => {
                 <NavLink to="/about">About</NavLink>
             </Menu.Item>
             <Menu.Item key="topics">
-              <NavLink to="/topics">Topics</NavLink>
+                <NavLink to="/topics">Topics</NavLink>
+            </Menu.Item>
+            <Menu.Item key="login">
+                <NavLink to="/login">Login</NavLink>
             </Menu.Item>
         </Menu>
     </Header>
