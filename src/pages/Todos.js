@@ -3,7 +3,8 @@ import NewTodoForm from './NewTodoForm';
 import {Row, Col, Card, Button, Typography } from 'antd';
 const { Title } = Typography;
 
-const Todos = () => {
+const Todos = (props) => {
+    console.log(props)
     // set React Hook
     const [todos, setTodos] = useState([
         {id: 1, description: "aaaaaa", reporter: "John" },
@@ -24,7 +25,7 @@ const Todos = () => {
         todos.map( todo => {
             return (
                 <Col span={8} key={todo.id}>
-                    <Card title="Card title" bordered={false} style={{margin: "10px 0px",}}>
+                    <Card title={todo.reporter} bordered={false} style={{margin: "10px 0px",}}>
                         <p>{todo.description}</p>
                         <p>{todo.reporter}</p>
                         <Button block type="danger" icon="close" onClick={()=> deleteHandler(todo.id)}>

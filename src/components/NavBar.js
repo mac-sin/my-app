@@ -9,22 +9,22 @@ const NavBar = () => {
     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
         <div className="logo" style={LogoStyle}/>
         <Menu
-            theme="dark"
+            theme="light"
             mode="horizontal"
             defaultSelectedKeys={['home']}
             style={{ lineHeight: '64px' }}
         >
             <Menu.Item key="home">
-                <NavLink exact to="/" activeClassName="active">Home</NavLink>
+                <NavLink exact to="/">Home</NavLink>
             </Menu.Item>
             <Menu.Item key="todos">
-                <NavLink to="/todos" activeClassName="active">ToDo</NavLink>
+                <NavLink to="/todos">ToDo</NavLink>
             </Menu.Item>
             <Menu.Item key="about">
-                <NavLink to="/about" activeClassName="active">About</NavLink>
+                <NavLink to="/about">About</NavLink>
             </Menu.Item>
             <Menu.Item key="topics">
-              <NavLink to="/topics" activeClassName="active">Topics</NavLink>
+              <NavLink to="/topics">Topics</NavLink>
             </Menu.Item>
         </Menu>
     </Header>

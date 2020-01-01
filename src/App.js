@@ -6,15 +6,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Todos from './pages/Todos';
+import Rainbow from './hoc/Rainbow';
+
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
-
 
 const Login = () => {
   return <div className="container"><h2>Login</h2></div>;
 }
 
-const Home = () => {
+const Home = (props) => {
+  console.log(props)
   return <div className="container"><h2>Home</h2></div>;
 }
 
@@ -62,7 +64,7 @@ const App = () => {
       <Layout className="layout">
         <NavBar />
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Rainbow(Home)} />
           <Route path="/about" component={About} />
           <Route path="/todos" component={Todos} />
           <Route path="/topics" component={Topics} />
