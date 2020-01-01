@@ -2,6 +2,7 @@ import React , { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import NewTodoForm from './NewTodoForm';
+import IconImage from '../assets/icon.png';
 import {Row, Col, Card, Button, Typography } from 'antd';
 const { Title } = Typography;
 
@@ -51,16 +52,21 @@ class Todos extends Component {
                     key={post.id} 
                     bordered={false} 
                     style={{margin: "10px 0px"}}
-                    onClick={ ()=>{ this.props.history.push(`/todo/${post.id}`) }}
+                    onClick={ ()=>{ this.props.history.push(`/todos/${post.id}`) }}
                     >
-                         <p>{post.body}</p>
-                         <Link to={'/todo/'+post.id}>
-                            <Button type="primary">Detail: {post.id}</Button>
-                         </Link>
-                         <Button type="danger" icon="close" onClick={()=> this.deleteHandler(post.id)}>
-                             Delete
-                         </Button>
-                     </Card>
+                        <div className="card-body">
+                            <div className="icon-container">
+                                <img className="icon-image" src={IconImage} alt="icon" />
+                            </div>
+                            <p>{post.body}</p>
+                            <Link to={'/todos/'+post.id}>
+                                <Button type="primary">Detail: {post.id}</Button>
+                            </Link>
+                            <Button type="danger" icon="close" onClick={()=> this.deleteHandler(post.id)}>
+                                Delete
+                            </Button>
+                        </div>
+                    </Card>
                 )
             })
         ) : (

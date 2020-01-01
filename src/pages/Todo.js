@@ -32,8 +32,6 @@ class Todo extends Component {
                 <h3>Loading Post...</h3>
             </div>
         )
-
-
         return ( 
             <div className="container">
                 <h1>Todo: { this.state.id }</h1>

@@ -3,7 +3,7 @@
 
 // Nested Routing
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Todos from './pages/Todos';
 import Rainbow from './hoc/Rainbow';
@@ -67,12 +67,14 @@ const App = () => {
       <Layout className="layout">
         <NavBar />
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
-          <Route exact path="/" component={Rainbow(Home)} />
-          <Route path="/about" component={About} />
-          <Route path="/todos" component={Todos} />
-          <Route path="/topics" component={Topics} />
-          <Route path="/login" component={Login} />
-          <Route path="/todo/:id" component={Todo} />
+          <Switch>
+            <Route exact path="/" component={Rainbow(Home)} />
+            <Route path="/about" component={About} />
+            <Route path="/todos/:id" component={Todo} />
+            <Route path="/todos" component={Todos} />
+            <Route path="/topics" component={Topics} />
+            <Route path="/login" component={Login} />
+          </Switch>
           <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
         </Content>
       </Layout>
