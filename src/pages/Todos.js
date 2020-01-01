@@ -1,4 +1,5 @@
 import React , { Component, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import NewTodoForm from './NewTodoForm';
 import {Row, Col, Card, Button, Typography } from 'antd';
@@ -25,15 +26,19 @@ class Todos extends Component {
     getPosts () {
         return axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(res => {
-                // console.log(res.data)
+                console.log('getPosts():',res.data)
                 return res.data.slice(0,10)
             })
     }
 
     async componentDidMount(){
-        const posts = await this.getPosts()
-        this.setState({ posts: posts })
-        console.log(this.state.posts)
+        if ( localStorage.getItem("posts") ){
+            this.setState({ posts: JSON.parse( localStorage.getItem("posts") ) })
+        } else {
+            const posts = await this.getPosts()
+            this.setState({ posts: posts })
+            localStorage.setItem("posts",JSON.stringify(posts))
+        }
     }
 
     render() { 
@@ -41,19 +46,29 @@ class Todos extends Component {
         const postList = posts.length ? (
             posts.map(post => {
                 return (
-                    <Card title={post.title} key={post.id} bordered={false} style={{margin: "10px 0px"}}>
+                    <Card 
+                    title={post.title} 
+                    key={post.id} 
+                    bordered={false} 
+                    style={{margin: "10px 0px"}}
+                    onClick={ ()=>{ this.props.history.push(`/todo/${post.id}`) }}
+                    >
                          <p>{post.body}</p>
-                         <Button block type="danger" icon="close" onClick={()=> this.deleteHandler(post.id)}>
+                         <Link to={'/todo/'+post.id}>
+                            <Button type="primary">Detail: {post.id}</Button>
+                         </Link>
+                         <Button type="danger" icon="close" onClick={()=> this.deleteHandler(post.id)}>
                              Delete
                          </Button>
                      </Card>
                 )
             })
         ) : (
-            <div> No Posts Yet</div>
+            <Title level={3}>No Posts Yet</Title>
         )
         return ( 
             <div className="container">
+                <NewTodoForm addHandler={this.addHandler}/>
                 {postList}
             </div>
         );

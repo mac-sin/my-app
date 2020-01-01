@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Todos from './pages/Todos';
 import Rainbow from './hoc/Rainbow';
+import Todo from './pages/Todo';
 
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="/todos" component={Todos} />
           <Route path="/topics" component={Topics} />
           <Route path="/login" component={Login} />
+          <Route path="/todo/:id" component={Todo} />
           <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
         </Content>
       </Layout>
