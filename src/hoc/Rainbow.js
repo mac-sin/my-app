@@ -1,6 +1,5 @@
 // Higher Order Component...
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 const Rainbow = (WrappedComponent) => {
     const colours = ['red', 'pink', 'orange', 'blue', 'green', 'yellow'];
