@@ -9,7 +9,7 @@ class Todo extends Component {
     getPosts (id) {
         return axios.get('https://jsonplaceholder.typicode.com/posts/'+id)
             .then(res => {
-                console.log('getPosts():',res.data)
+                // console.log('getPosts():',res.data)
                 return res.data
             })
     }
@@ -17,7 +17,7 @@ class Todo extends Component {
     async componentDidMount () {
         let id = this.props.match.params.id;
         const post = await this.getPosts (id);
-        console.log(post)
+        // console.log(post)
         this.setState({ id: id, post: post })
     }
     

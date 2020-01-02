@@ -8,13 +8,14 @@ import NavBar from './components/NavBar';
 import Todos from './pages/Todos';
 import Rainbow from './hoc/Rainbow';
 import Todo from './pages/Todo';
+import LoginForm from './pages/LoginForm';
 
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
 
-const Login = (props) => {
-  return <div className="container"><h2>Login</h2></div>;
-}
+// const Login = (props) => {
+//   return <div className="container"><h2>Login</h2></div>;
+// }
 
 const Home = (props) => {
   console.log(props)
@@ -73,7 +74,7 @@ const App = () => {
             <Route path="/todos/:id" component={Todo} />
             <Route path="/todos" component={Todos} />
             <Route path="/topics" component={Topics} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginForm} />
           </Switch>
           <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
         </Content>

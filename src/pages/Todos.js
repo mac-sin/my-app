@@ -1,9 +1,9 @@
-import React , { Component, useState } from 'react';
+import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import NewTodoForm from './NewTodoForm';
 import IconImage from '../assets/icon.png';
-import {Row, Col, Card, Button, Typography } from 'antd';
+import { Card, Button, Typography } from 'antd';
 const { Title } = Typography;
 
 class Todos extends Component {
@@ -27,7 +27,7 @@ class Todos extends Component {
     getPosts () {
         return axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(res => {
-                console.log('getPosts():',res.data)
+                // console.log('getPosts():',res.data)
                 return res.data.slice(0,10)
             })
     }
@@ -52,7 +52,7 @@ class Todos extends Component {
                     key={post.id} 
                     bordered={false} 
                     style={{margin: "10px 0px"}}
-                    onClick={ ()=>{ this.props.history.push(`/todos/${post.id}`) }}
+                    // onClick={ ()=>{ this.props.history.push(`/todos/${post.id}`) }}
                     >
                         <div className="card-body">
                             <div className="icon-container">

@@ -1,15 +1,18 @@
-import React , { useState } from 'react';
+// import React , { useState } from 'react';
+import React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import '../App.css';
+const { TextArea } = Input;
 
 function hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
 class HorizontalLoginForm extends React.Component {
+
     componentDidMount() {
       // To disable submit button at the beginning.
-    //   this.props.form.validateFields();
+      this.props.form.validateFields();
     }
   
     handleSubmit = e => {
@@ -23,39 +26,40 @@ class HorizontalLoginForm extends React.Component {
   
     render() {
       const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-  
+
       // Only show error after a field is touched.
-      const usernameError = isFieldTouched('username') && getFieldError('username');
-      const passwordError = isFieldTouched('password') && getFieldError('password');
+      const usertitleError = isFieldTouched('title') && getFieldError('title');
+      const passbodyError = isFieldTouched('body') && getFieldError('body');
       return (
         <Form layout="inline" onSubmit={this.handleSubmit}>
         
-          <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
-            {getFieldDecorator('username', {
-              rules: [{ required: true, message: 'Please input your username!' }],
+          <Form.Item validateStatus={usertitleError ? 'error' : ''} help={usertitleError || ''}>
+            {getFieldDecorator('title', {
+              rules: [{ required: true, message: 'Please input your title!' }],
             })(
               <Input
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Username"
+                prefix={<Icon type="edit" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="title"
+                autoComplete="off"
               />,
             )}
           </Form.Item>
 
-          <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
-            {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Please input your Password!' }],
+          <Form.Item validateStatus={passbodyError ? 'error' : ''} help={passbodyError || ''}>
+            {getFieldDecorator('body', {
+              rules: [{ required: true, message: 'Please input your Message!' }],
             })(
               <Input
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type="password"
-                placeholder="Password"
+                prefix={<Icon type="edit" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="body"
+                autoComplete="off"
               />,
             )}
           </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
-              Log in
+              Submit
             </Button>
           </Form.Item>
           
