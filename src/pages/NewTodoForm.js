@@ -1,8 +1,8 @@
 // import React , { useState } from 'react';
 import React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
+
 import '../App.css';
-const { TextArea } = Input;
 
 function hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);

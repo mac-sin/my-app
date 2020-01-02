@@ -15,7 +15,7 @@ class NormalLoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-    <div style={{paddingTop:40, width:300, textAlign:'center'}}>
+    <div style={{paddingTop:40, width:300, textAlign:'center', margin: 'auto'}}>
     <h2>Login</h2>
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>

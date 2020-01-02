@@ -1,7 +1,8 @@
 import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import NewTodoForm from './NewTodoForm';
+// import NewTodoForm from './NewTodoForm';
+import NewTopicForm from './NewTopicForm';
 import IconImage from '../assets/icon.png';
 import { Card, Button, Typography } from 'antd';
 const { Title } = Typography;
@@ -10,35 +11,60 @@ class Todos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            iconLoading: false,
         }
     }
 
-    deleteHandler (id) {
+    deleteHandler = (id) => {
         const postList = this.state.posts.filter( post => post.id !== id )
         this.setState({ posts: postList })
+        localStorage.setItem("posts", JSON.stringify(postList))
     }
 
-    addHandler (post) {
-        post.id = Math.random()
-        this.setState( [...this.state.posts, post] )
+    addHandler = (post) => {
+        post.id = Math.floor(Math.random() *10)
+        post.userId = post.id
+        const postList = [...this.state.posts, post]
+        this.setState({ posts: postList })
+        localStorage.setItem("posts", JSON.stringify(postList))
     }
     
-    getPosts () {
-        return axios.get('https://jsonplaceholder.typicode.com/posts')
+    getPosts = ({id=null, userId=null, limited=10}) => {
+        this.setState({ iconLoading: true })
+        let url = 'https://jsonplaceholder.typicode.com/posts';
+        if(id)
+            url += "/"+id;
+        else if(userId)
+            url += "?userId="+ Math.floor(userId);
+        return axios.get(url)
             .then(res => {
-                // console.log('getPosts():',res.data)
-                return res.data.slice(0,10)
+                console.log('getPosts():',res.data)
+                console.log('limited: '+ limited)
+                return (id)? res.data : res.data.slice(0,limited);
             })
     }
 
+    clearLocalStorage = () => {
+        localStorage.removeItem("posts")
+        alert('localStorage.removeItem("posts")')
+    }
+
+    reLoadJSON = async () => {
+        const userId = Math.floor(Math.random() * 10)
+        const posts = await this.getPosts({userId:userId, limited:7})
+        this.setState({ posts: posts, iconLoading: false })
+        localStorage.setItem("posts", JSON.stringify(posts))
+    }
+
+    /* Start */
     async componentDidMount(){
         if ( localStorage.getItem("posts") ){
             this.setState({ posts: JSON.parse( localStorage.getItem("posts") ) })
         } else {
-            const posts = await this.getPosts()
-            this.setState({ posts: posts })
-            localStorage.setItem("posts",JSON.stringify(posts))
+            const posts = await this.getPosts({userId:3, limited:3})
+            this.setState({ posts: posts, iconLoading: false })
+            localStorage.setItem("posts", JSON.stringify(posts))
         }
     }
 
@@ -71,17 +97,47 @@ class Todos extends Component {
                 )
             })
         ) : (
-            <Title level={3}>No Posts Yet</Title>
+            <Card
+            bordered={false} 
+            style={{margin: "10px 0px"}}
+            >
+                <Title level={4} style={{textAlign:'center'}}>No Posts Yet</Title>
+            </Card>
         )
+        const locals = JSON.parse( localStorage.getItem("posts"));
+
+        const isInLocalStorage = (localStorage.getItem("posts") && locals.length)? (
+            <p style={{textAlign:'center'}}>{locals.length} Data Store in localStorage.</p>
+        ) : (
+            <p style={{textAlign:'center', cursor:'pointer'}}>
+                No Data Store in localStorage. 
+                <Button size="small" style={{margin:'0 4px'}}
+                shape="round"
+                onClick={()=>{ this.clearLocalStorage() }}>Remove it?</Button>
+            </p>
+        );
+
+        const reLoadJSON = (this.state.posts.length)? (null) : (
+            <div style={{margin: 10, textAlign:'center'}}>
+                <Button
+                loading={this.state.iconLoading}
+                shape="round"
+                onClick={()=>{ this.reLoadJSON() }}>reLoad JSON</Button>
+            </div>
+        );
+
         return ( 
             <div className="container">
-                <NewTodoForm addHandler={this.addHandler}/>
+                { isInLocalStorage }
+                { reLoadJSON }
+                <NewTopicForm addHandler={this.addHandler}/>
                 {postList}
             </div>
         );
     }
 }
  
+
 // const Todos = (props) => {
 //     console.log(props)
 //     // set React Hook

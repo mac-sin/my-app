@@ -76,10 +76,11 @@ const App = () => {
             <Route path="/topics" component={Topics} />
             <Route path="/login" component={LoginForm} />
           </Switch>
-          <div style={{padding:8}}>https://mac-sin.github.io/my-app/</div>
         </Content>
       </Layout>
-      <Footer/>
+      <Footer style={{ textAlign: 'center' }}>
+        <a href="https://mac-sin.github.io/my-app/" target="noopener" style={{color:"black",padding:8}}>https://mac-sin.github.io/my-app/</a>
+      </Footer>
     </Router>
   );
 }
