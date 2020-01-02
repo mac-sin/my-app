@@ -5,9 +5,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 import NavBar from './components/NavBar';
-import Todos from './pages/Todos';
+import Posts from './pages/Posts';
 import Rainbow from './hoc/Rainbow';
-import Todo from './pages/Todo';
+import Post from './pages/Post';
 import LoginForm from './pages/LoginForm';
 
 import { Layout } from 'antd';
@@ -71,8 +71,8 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Rainbow(Home)} />
             <Route path="/about" component={About} />
-            <Route path="/todos/:id" component={Todo} />
-            <Route path="/todos" component={Todos} />
+            <Route path="/posts/:id" component={Post} />
+            <Route path="/posts" component={Posts} />
             <Route path="/topics" component={Topics} />
             <Route path="/login" component={LoginForm} />
           </Switch>

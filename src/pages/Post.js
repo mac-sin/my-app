@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class Todo extends Component {
+class Post extends Component {
     state = { 
         id: null,
         post: null
@@ -35,11 +35,11 @@ class Todo extends Component {
         )
         return ( 
             <div className="container">
-                <h1>Todo: { this.state.id }</h1>
+                <h1>Post: { this.state.id }</h1>
                 { content }
             </div>
         );
     }
 }
  
-export default Todo;
+export default Post;

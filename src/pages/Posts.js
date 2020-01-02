@@ -2,12 +2,12 @@ import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import NewTodoForm from './NewTodoForm';
-import NewPostForm from './NewPostForm';
+import PostForm from './PostForm';
 import IconImage from '../assets/icon.png';
 import { Card, Button, Typography, Alert } from 'antd';
 const { Title } = Typography;
 
-class Todos extends Component {
+class Posts extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,7 +95,7 @@ class Todos extends Component {
                             </div>
                             <p>userId: {post.userId}</p>
                             <p>{post.body}</p>
-                            <Link to={'/todos/'+post.id}>
+                            <Link to={'/posts/'+post.id}>
                                 <Button type="primary">Detail: {post.id}</Button>
                             </Link>
                             <Button type="danger" icon="close" onClick={()=> this.deleteHandler(post.id)}>
@@ -148,13 +148,14 @@ class Todos extends Component {
             <div className="container">
                 { alert }
                 { isInLocalStorage }
-                <NewPostForm addHandler={this.addHandler}/>
+                <PostForm addHandler={this.addHandler}/>
                 {postList}
             </div>
         );
     }
 }
- 
+
+export default Posts;
 
 // const Todos = (props) => {
 //     console.log(props)
@@ -207,4 +208,3 @@ class Todos extends Component {
 //     );
 // }
 
-export default Todos;

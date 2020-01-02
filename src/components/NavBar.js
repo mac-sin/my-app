@@ -17,8 +17,8 @@ const NavBar = () => {
             <Menu.Item key="home">
                 <NavLink exact to="/">Home</NavLink>
             </Menu.Item>
-            <Menu.Item key="todos">
-                <NavLink to="/todos">ToDo</NavLink>
+            <Menu.Item key="posts">
+                <NavLink to="/posts">Posts</NavLink>
             </Menu.Item>
             <Menu.Item key="about">
                 <NavLink to="/about">About</NavLink>

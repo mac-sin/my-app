@@ -12,7 +12,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
       return (
         <Modal
           visible={visible}
-          title="Create a new collection"
+          title="Create A New Post"
           okText="Create"
           onCancel={onCancel}
           onOk={onCreate}
