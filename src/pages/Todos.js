@@ -2,9 +2,9 @@ import React , { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import NewTodoForm from './NewTodoForm';
-import NewTopicForm from './NewTopicForm';
+import NewPostForm from './NewPostForm';
 import IconImage from '../assets/icon.png';
-import { Card, Button, Typography } from 'antd';
+import { Card, Button, Typography, Alert } from 'antd';
 const { Title } = Typography;
 
 class Todos extends Component {
@@ -12,13 +12,17 @@ class Todos extends Component {
         super(props);
         this.state = {
             posts: [],
+            hasLocals: false,
+            localLength: 0,
             iconLoading: false,
+            alertVisible: false,
+            alertMessage: 'alert message.',
         }
     }
 
     deleteHandler = (id) => {
         const postList = this.state.posts.filter( post => post.id !== id )
-        this.setState({ posts: postList })
+        this.setState({ posts: postList, hasLocals: true, localLength: postList.length })
         localStorage.setItem("posts", JSON.stringify(postList))
     }
 
@@ -26,7 +30,7 @@ class Todos extends Component {
         post.id = Math.floor(Math.random() *10)
         post.userId = post.id
         const postList = [...this.state.posts, post]
-        this.setState({ posts: postList })
+        this.setState({ posts: postList, hasLocals: true, localLength: postList.length })
         localStorage.setItem("posts", JSON.stringify(postList))
     }
     
@@ -39,31 +43,37 @@ class Todos extends Component {
             url += "?userId="+ Math.floor(userId);
         return axios.get(url)
             .then(res => {
-                console.log('getPosts():',res.data)
-                console.log('limited: '+ limited)
                 return (id)? res.data : res.data.slice(0,limited);
             })
     }
 
     clearLocalStorage = () => {
-        localStorage.removeItem("posts")
-        alert('localStorage.removeItem("posts")')
+        localStorage.removeItem("posts");
+        this.setState({ hasLocals: false, alertVisible: true, alertMessage: 'local post removed.' });
+        setTimeout(() => { 
+            this.setState({ localLength: 0, alertVisible: false, alertMessage: 'alert message.' });
+        }, 2000);
     }
 
     reLoadJSON = async () => {
         const userId = Math.floor(Math.random() * 10)
         const posts = await this.getPosts({userId:userId, limited:7})
-        this.setState({ posts: posts, iconLoading: false })
+        this.setState({ posts: posts, hasLocals: true, localLength: posts.length, iconLoading: false })
         localStorage.setItem("posts", JSON.stringify(posts))
+    }
+
+    alertCloseHandler = () => {
+        this.setState({ alertVisible: false, alertMessage: 'alert message.' })
     }
 
     /* Start */
     async componentDidMount(){
         if ( localStorage.getItem("posts") ){
-            this.setState({ posts: JSON.parse( localStorage.getItem("posts") ) })
+            const locals = JSON.parse(localStorage.getItem("posts"))
+            this.setState({ posts: locals, hasLocals: true, localLength: locals.length, })
         } else {
             const posts = await this.getPosts({userId:3, limited:3})
-            this.setState({ posts: posts, iconLoading: false })
+            this.setState({ posts: posts, hasLocals: true, localLength: posts.length, iconLoading: false })
             localStorage.setItem("posts", JSON.stringify(posts))
         }
     }
@@ -74,11 +84,10 @@ class Todos extends Component {
             posts.map(post => {
                 return (
                     <Card 
-                    title={post.title} 
-                    key={post.id} 
-                    bordered={false} 
-                    style={{margin: "10px 0px"}}
-                    // onClick={ ()=>{ this.props.history.push(`/todos/${post.id}`) }}
+                        title={post.title} 
+                        key={post.id} 
+                        bordered={false} 
+                        style={{margin: "15px 0px"}}
                     >
                         <div className="card-body">
                             <div className="icon-container">
@@ -98,39 +107,48 @@ class Todos extends Component {
             })
         ) : (
             <Card
-            bordered={false} 
-            style={{margin: "10px 0px"}}
+                bordered={false} 
+                style={{margin: "15px 0px"}}
             >
                 <Title level={4} style={{textAlign:'center'}}>No Posts Yet</Title>
+                <div style={{margin: 10, textAlign:'center'}}>
+                    <Button
+                        loading={this.state.iconLoading}
+                        shape="round"
+                        onClick={()=>{ this.reLoadJSON() }}
+                    >reLoad JSON</Button>
+                </div>                
             </Card>
         )
-        const locals = JSON.parse( localStorage.getItem("posts"));
 
-        const isInLocalStorage = (localStorage.getItem("posts") && locals.length)? (
-            <p style={{textAlign:'center'}}>{locals.length} Data Store in localStorage.</p>
+        const isInLocalStorage = (!this.state.hasLocals)? (
+            <p style={{textAlign:'center'}}>No Data Store in localStorage.</p>
         ) : (
             <p style={{textAlign:'center', cursor:'pointer'}}>
-                No Data Store in localStorage. 
+                {this.state.localLength} Data Store in localStorage. 
                 <Button size="small" style={{margin:'0 4px'}}
-                shape="round"
-                onClick={()=>{ this.clearLocalStorage() }}>Remove it?</Button>
+                    shape="round"
+                    onClick={() => { this.clearLocalStorage() }}
+                >Remove it?</Button>
             </p>
         );
 
-        const reLoadJSON = (this.state.posts.length)? (null) : (
-            <div style={{margin: 10, textAlign:'center'}}>
-                <Button
-                loading={this.state.iconLoading}
-                shape="round"
-                onClick={()=>{ this.reLoadJSON() }}>reLoad JSON</Button>
-            </div>
-        );
+        const alert = (this.state.alertVisible) ? (
+            <Alert
+                style={{ marginBottom: 10}}
+                message={ this.state.alertMessage }
+                type="warning"
+                showIcon
+                closable
+                afterClose={()=> { this.alertCloseHandler() }}
+            />
+          ) : (<div></div>)
 
         return ( 
             <div className="container">
+                { alert }
                 { isInLocalStorage }
-                { reLoadJSON }
-                <NewTopicForm addHandler={this.addHandler}/>
+                <NewPostForm addHandler={this.addHandler}/>
                 {postList}
             </div>
         );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import '../App.css';
-
+const { TextArea } = Input;
 
 const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
@@ -25,7 +25,7 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
             </Form.Item>
 
             <Form.Item label="Description">
-              {getFieldDecorator('description')(<Input type="textarea" />)}
+              {getFieldDecorator('description')(<TextArea />)}
             </Form.Item>
 
             {/* <Form.Item className="collection-create-form_last-form-item"> */}
@@ -65,12 +65,8 @@ class CollectionsPage extends React.Component {
       if (err) {
         return;
       }
-
-      console.log('Received values of form: ', values);
       const post = { title: values.title, body: values.description }
-      console.log('submit: ', post);
       this.props.addHandler(post);
-
       form.resetFields();
       this.setState({ visible: false });
     });
@@ -84,7 +80,7 @@ class CollectionsPage extends React.Component {
     return (
       <div>
         <Button block type="primary" onClick={this.showModal}>
-          New Collection
+          New Post
         </Button>
         <CollectionCreateForm
           wrappedComponentRef={this.saveFormRef}
