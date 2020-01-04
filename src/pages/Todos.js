@@ -36,6 +36,7 @@ const Todos = (props) => {
     return (
         <div className="container">
             <h2>Todos(Redux){todoLength}</h2>
+            <a href="https://chentsulin.github.io/redux/index.html" target="noopener" style={{color:"black",padding:8}}>https://chentsulin.github.io/redux/index.html</a>
             { todoList }
         </div>
     );
