@@ -1,48 +1,65 @@
-import React , { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Card, Button } from 'antd';
+import { Card, Button, Typography } from 'antd';
+const { Title, Text, Paragraph } = Typography;
 
-class Todos extends Component {
+const Todos = (props) => {
+    const [body, setBody] = useState('my-body');
+    const onChange = str => {
+        console.log('Content change:', str);
+        setBody( str );
+      };
+    
+    // 與 componentDidMount 和 componentDidUpdate 類似：
+    useEffect(() => {
+        // 使用瀏覽器 API 更新文件標題
+        // document.title = `You clicked ${count} times`;
+        // clickHandler(count);
+    });
 
-    deleteHandler = (id) => {
-        const postList = this.state.posts.filter( post => post.id !== id )
-        this.setState({ posts: postList, hasLocals: true, localLength: postList.length })
-        localStorage.setItem("posts", JSON.stringify(postList))
-    }
-
-    render() { 
-        console.log(this.props.todos);
-        const { todos } = this.props;
-        const todoList = todos.length? (
-            todos.map( todo => {
-                return (
-                    <Card
-                        bordered={false} 
-                        style={{margin: "15px 0px"}}
-                        key={todo.id}
-                    >
-                        <div id={todo.id}>
-                            <div>{todo.title}</div>
-                            <div>{todo.body}</div>
-                            <Link to={'/todos/'+todo.id}>
-                                <Button type="primary">Detail: {todo.id}</Button>
-                            </Link>
+    const todoList = props.todos.length? (
+        props.todos.map( todo => {
+            return (
+                <Card
+                    bordered={false} 
+                    style={{margin: "15px 0px"}}
+                    key={todo.id}
+                >
+                    <div id={todo.id}>
+                        <Title level={3}>{todo.title}</Title>
+                        <Paragraph>{todo.body}</Paragraph>
+                        <Paragraph
+                            type="secondary"
+                            editable={{ onChange: onChange }}
+                        >{body}
+                        </Paragraph>
+                        <div style={{marginBottom:10}}>
+                            <Text code>id: {todo.id}</Text>
+                            <Text code>userId: {todo.userId}</Text>
                         </div>
-                    </Card>
 
-                )
-            })
-        ) : (
+                        <Link to={'/todos/'+todo.id}>
+                            <Button type="primary">Detail: {todo.id}</Button>
+                        </Link>
+                    </div>
+                </Card>
+            )
+        })
+    ) : (
+        <Card
+            bordered={false}
+            style={{margin: "15px 0px"}}
+        >
             <div>No Todos</div>
-        )
-        return ( 
-            <div className="container">
-                <h2>Todos(Redux)</h2>
-                { todoList }
-            </div>
-         );
-    }
+        </Card>
+    )
+    return ( 
+        <div className="container">
+            <h2>Todos(Redux)</h2>
+            { todoList }
+        </div>
+        );
 }
 
 const mapStateToProps = ( state ) => {
