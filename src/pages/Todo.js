@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Button, } from 'antd';
+import { deleteTodo } from '../actions/todoActions';
 
 class Todo extends Component {
     clickHandler = () => {
@@ -51,7 +52,7 @@ const mapStateToPorops = ( state, ownProps ) => {
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        deleteTodo: (id) => { dispatch({type: "DELETE_TODO", id: id}) }
+        deleteTodo: (id) => { dispatch(deleteTodo(id)) }
     }
 }
 
