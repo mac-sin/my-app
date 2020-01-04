@@ -9,16 +9,18 @@ import Posts from './pages/Posts';
 import Rainbow from './hoc/Rainbow';
 import Post from './pages/Post';
 import LoginForm from './pages/LoginForm';
+import Store from './redux/Store';
 
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
 
-// const Login = (props) => {
-//   return <div className="container"><h2>Login</h2></div>;
-// }
+const todoAction = { type: 'ADD_TODO', todo: 'buy milk' }
+Store.dispatch(todoAction);
+
 
 const Home = (props) => {
-  console.log(props)
+  // console.log(props)
+  
   return <div className="container"><h2>Home</h2></div>;
 }
 
