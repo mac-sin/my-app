@@ -1,46 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Card, Button, } from 'antd';
 import { deleteTodo } from '../actions/todoActions';
+import { Card, Button, Typography, Divider } from 'antd';
+const { Title, Text, Paragraph } = Typography;
 
-class Todo extends Component {
-    clickHandler = () => {
+const Todo = (props) => {
+    
+    const [body, setBody] = useState('editable text...');
+    const onChangeHandler = str => {
+        console.log('Content change:', str);
+        setBody( str );
+    };
+
+    const clickHandler = () => {
         //dispatch...
-        this.props.deleteTodo(this.props.todo.id);
-        this.props.history.push("/todos")
+        props.deleteTodo(props.todo.id);
+        props.history.push("/todos")
     }
 
-    render() { 
-        const todo = this.props.todo;
-        const content = ( todo )? (
-            <Card
-                bordered={false} 
-                style={{margin: "15px 0px"}}
-                key={todo.id}
+    const todo = props.todo;
+    const content = ( todo )? (
+        <Card
+            bordered={false} 
+            style={{margin: "15px 0px"}}
+            key={todo.id}
+        >
+            <Title level={3}>{todo.title}</Title>
+            <Paragraph>{todo.body}</Paragraph>
+            <Paragraph
+                type="secondary"
+                editable={{ onChange: onChangeHandler }}
             >
-                <p>userId: { todo.userId }</p>
-                <h3>{ todo.title }</h3>
-                <p>{ todo.body }</p>
-                <Button 
-                    type="danger" 
-                    icon="close"
-                    onClick={this.clickHandler}
-                >
-                    Delete
-                </Button>
-            </Card>
-        ) : (
-            <div>
-                <h3>Loading Post...</h3>
+                {body}
+            </Paragraph>
+
+            <div style={{marginBottom:10}}>
+                <Text code>id: {todo.id}</Text>
+                <Text code>userId: {todo.userId}</Text>
             </div>
-        )
-        return ( 
-            <div className="container">
-                <h1>Todo(Redux)</h1>
-                { content }
-            </div>
-        );
-    }
+            <Divider dashed>actions</Divider>
+            <Button 
+                type="danger" 
+                icon="close"
+                onClick={clickHandler}
+            >
+                Delete
+            </Button>
+        </Card>
+    ) : (
+        <div>
+            <h3>Loading Post...</h3>
+        </div>
+    )
+
+    return ( 
+        <div className="container">
+            <h1>Todo(Redux)</h1>
+            { content }
+        </div>
+    );
 }
  
 const mapStateToPorops = ( state, ownProps ) => {

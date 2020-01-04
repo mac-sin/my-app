@@ -58,8 +58,8 @@ const Topic = ({ match }) => {
 const App = () => {
   return (
     <Router>
-      <Layout className="layout">
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Layout>
+        <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: 0, }}>
           <NavBar />
         </Header>
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
