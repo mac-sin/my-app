@@ -5,7 +5,8 @@ import { Card, Button, Typography, Divider } from 'antd';
 const { Title, Text, Paragraph } = Typography;
 
 const Todo = (props) => {
-    
+    const count = props.count? (props.count) : (0)
+
     const [body, setBody] = useState('editable text...');
     const onChangeHandler = str => {
         console.log('Content change:', str);
@@ -57,6 +58,11 @@ const Todo = (props) => {
         <div className="container">
             <h1>Todo(Redux)</h1>
             { content }
+            <div>
+                <h3>count: {count}</h3>
+                <Button icon="plus" onClick={() => {props.increment()}}>increment</Button>
+                <Button icon="minus" onClick={() => {props.decrement()}}>decrement</Button>
+            </div>
         </div>
     );
 }
@@ -64,13 +70,16 @@ const Todo = (props) => {
 const mapStateToPorops = ( state, ownProps ) => {
     let id = ownProps.match.params.id;
     return {
+        count: state.count,
         todo: state.todos.find(todo => todo.id === parseInt(id))
     }
 }
 
 const mapDispatchToProps = ( dispatch ) => {
     return {
-        deleteTodo: (id) => { dispatch(deleteTodo(id)) }
+        deleteTodo: (id) => { dispatch(deleteTodo(id)) },
+        increment: () => { dispatch({ type: 'INCREMENT' }) },
+        decrement: () => { dispatch({ type: 'DECREMENT' }) },
     }
 }
 
