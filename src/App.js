@@ -10,6 +10,7 @@ import Rainbow from './hoc/Rainbow';
 import Post from './pages/Post';
 import LoginForm from './pages/LoginForm';
 import Todos from './pages/Todos';
+import Todo from './pages/Todo';
 
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
@@ -65,6 +66,7 @@ const App = () => {
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <Switch>
             <Route exact path="/" component={Rainbow(Home)} />
+            <Route path="/todos/:id" component={Todo} />
             <Route path="/todos" component={Todos} />
             <Route path="/posts/:id" component={Post} />
             <Route path="/posts" component={Posts} />
