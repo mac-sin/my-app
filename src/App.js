@@ -13,10 +13,7 @@ import Todos from './pages/Todos';
 import Todo from './pages/Todo';
 
 import { Layout } from 'antd';
-const { Content, Footer } = Layout;
-
-// RootReducer.dispatch({type: 'ADD_POST', todo: 'buy milk'});
-// RootReducer.dispatch({type: 'ADD_POST', todo: 'sleep more'});
+const { Content, Header, Footer } = Layout;
 
 const Home = (props) => {
   // console.log(props)
@@ -62,7 +59,9 @@ const App = () => {
   return (
     <Router>
       <Layout className="layout">
-        <NavBar />
+        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+          <NavBar />
+        </Header>
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <Switch>
             <Route exact path="/" component={Rainbow(Home)} />
@@ -74,10 +73,10 @@ const App = () => {
             <Route path="/login" component={LoginForm} />
           </Switch>
         </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          <a href="https://mac-sin.github.io/my-app/" target="noopener" style={{color:"black",padding:8}}>https://mac-sin.github.io/my-app/</a>
+        </Footer>
       </Layout>
-      <Footer style={{ textAlign: 'center' }}>
-        <a href="https://mac-sin.github.io/my-app/" target="noopener" style={{color:"black",padding:8}}>https://mac-sin.github.io/my-app/</a>
-      </Footer>
     </Router>
   );
 }

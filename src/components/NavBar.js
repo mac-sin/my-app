@@ -1,36 +1,35 @@
-import React from 'react';
-import { NavLink } from "react-router-dom";
+import React, { Fragment } from 'react';
+import { withRouter, NavLink } from "react-router-dom";
+import { Menu } from 'antd';
 
-import { Layout, Menu } from 'antd';
-const { Header } = Layout;
-
-const NavBar = () => {
-    return ( 
-    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <div className="logo" style={LogoStyle}/>
-        <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={['home']}
-            style={{ lineHeight: '64px' }}
-        >
-            <Menu.Item key="home">
-                <NavLink exact to="/">Home</NavLink>
-            </Menu.Item>
-            <Menu.Item key="posts">
-                <NavLink to="/posts">Posts</NavLink>
-            </Menu.Item>
-            <Menu.Item key="todos">
-                <NavLink to="/todos">Todos</NavLink>
-            </Menu.Item>
-            <Menu.Item key="topics">
-                <NavLink to="/topics">Topics</NavLink>
-            </Menu.Item>
-            <Menu.Item key="login">
-                <NavLink to="/login">Login</NavLink>
-            </Menu.Item>
-        </Menu>
-    </Header>
+const NavBar = ({location}) => {
+    return (
+        <Fragment>
+            <div className="logo" style={LogoStyle}/>
+            <Menu
+                theme="light"
+                mode="horizontal"
+                defaultSelectedKeys={['home']}
+                selectedKeys={location.pathname}
+                style={{ lineHeight: '64px' }}
+            >
+                <Menu.Item key="home">
+                    <NavLink exact to="/">Home</NavLink>
+                </Menu.Item>
+                <Menu.Item key="posts">
+                    <NavLink to="/posts">Posts</NavLink>
+                </Menu.Item>
+                <Menu.Item key="todos">
+                    <NavLink to="/todos">Todos</NavLink>
+                </Menu.Item>
+                <Menu.Item key="topics">
+                    <NavLink to="/topics">Topics</NavLink>
+                </Menu.Item>
+                <Menu.Item key="login">
+                    <NavLink to="/login">Login</NavLink>
+                </Menu.Item>
+            </Menu>
+        </Fragment>
     );
 }
 
@@ -41,4 +40,4 @@ const LogoStyle = {
     margin: "16px 24px 16px 0",
     float: "left",
 }
-export default NavBar;
+export default withRouter(NavBar);
