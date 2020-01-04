@@ -8,6 +8,15 @@ const initState = {
 }
 
 function RootReducer ( state = initState , action ) {
+    if (action.type === "DELETE_TODO") {
+        let newTodos = state.todos.filter( todo => {
+            return action.id !== todo.id
+        });
+        return {
+            ...state,
+            todos: newTodos
+        }
+    }
     return state;
 }
 

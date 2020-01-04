@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { Card, Button } from 'antd';
 
 class Todos extends Component {
+
+    deleteHandler = (id) => {
+        const postList = this.state.posts.filter( post => post.id !== id )
+        this.setState({ posts: postList, hasLocals: true, localLength: postList.length })
+        localStorage.setItem("posts", JSON.stringify(postList))
+    }
+
     render() { 
         console.log(this.props.todos);
         const { todos } = this.props;
@@ -21,9 +28,6 @@ class Todos extends Component {
                             <Link to={'/todos/'+todo.id}>
                                 <Button type="primary">Detail: {todo.id}</Button>
                             </Link>
-                            <Button type="danger" icon="close">
-                                Delete
-                            </Button>
                         </div>
                     </Card>
 

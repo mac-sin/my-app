@@ -1,15 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card, Button, } from 'antd';
 
 class Todo extends Component {
+    clickHandler = () => {
+        //dispatch...
+        this.props.deleteTodo(this.props.todo.id);
+        this.props.history.push("/todos")
+    }
+
     render() { 
         const todo = this.props.todo;
         const content = ( todo )? (
-            <div>
+            <Card
+                bordered={false} 
+                style={{margin: "15px 0px"}}
+                key={todo.id}
+            >
                 <p>userId: { todo.userId }</p>
                 <h3>{ todo.title }</h3>
                 <p>{ todo.body }</p>
-            </div>
+                <Button 
+                    type="danger" 
+                    icon="close"
+                    onClick={this.clickHandler}
+                >
+                    Delete
+                </Button>
+            </Card>
         ) : (
             <div>
                 <h3>Loading Post...</h3>
@@ -17,7 +35,7 @@ class Todo extends Component {
         )
         return ( 
             <div className="container">
-                <h1>Todo(Redux): { todo.id }</h1>
+                <h1>Todo(Redux)</h1>
                 { content }
             </div>
         );
@@ -31,4 +49,10 @@ const mapStateToPorops = ( state, ownProps ) => {
     }
 }
 
-export default connect(mapStateToPorops)(Todo);
+const mapDispatchToProps = ( dispatch ) => {
+    return {
+        deleteTodo: (id) => { dispatch({type: "DELETE_TODO", id: id}) }
+    }
+}
+
+export default connect(mapStateToPorops, mapDispatchToProps)(Todo);
