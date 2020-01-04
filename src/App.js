@@ -9,24 +9,17 @@ import Posts from './pages/Posts';
 import Rainbow from './hoc/Rainbow';
 import Post from './pages/Post';
 import LoginForm from './pages/LoginForm';
-import Store from './redux/Store';
+import Todos from './pages/Todos';
 
 import { Layout } from 'antd';
 const { Content, Footer } = Layout;
 
-const todoAction = { type: 'ADD_TODO', todo: 'buy milk' }
-Store.dispatch(todoAction);
-
+// RootReducer.dispatch({type: 'ADD_POST', todo: 'buy milk'});
+// RootReducer.dispatch({type: 'ADD_POST', todo: 'sleep more'});
 
 const Home = (props) => {
   // console.log(props)
-  
   return <div className="container"><h2>Home</h2></div>;
-}
-
-const About = (props) => {
-  console.log(props)
-  return <div className="container"><h2>About</h2></div>;
 }
 
 const Topics = ({ match }) => {
@@ -72,7 +65,7 @@ const App = () => {
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <Switch>
             <Route exact path="/" component={Rainbow(Home)} />
-            <Route path="/about" component={About} />
+            <Route path="/todos" component={Todos} />
             <Route path="/posts/:id" component={Post} />
             <Route path="/posts" component={Posts} />
             <Route path="/topics" component={Topics} />
