@@ -3,7 +3,7 @@
 
 // Nested Routing
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 import NavBar from './components/NavBar';
 import Posts from './pages/Posts';
 import Rainbow from './hoc/Rainbow';
@@ -11,6 +11,7 @@ import Post from './pages/Post';
 import LoginForm from './pages/LoginForm';
 import Todos from './pages/Todos';
 import Todo from './pages/Todo';
+import NoMatchPage from './pages/NoMatchPage.js';
 
 import { Layout } from 'antd';
 const { Content, Header, Footer } = Layout;
@@ -55,9 +56,10 @@ const Topic = ({ match }) => {
   );
 }
 
+
 const App = () => {
   return (
-    <Router>
+    <Router hashType="noslash">
       <Layout>
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%', padding: 0, }}>
           <NavBar />
@@ -71,6 +73,7 @@ const App = () => {
             <Route path="/posts" component={Posts} />
             <Route path="/topics" component={Topics} />
             <Route path="/login" component={LoginForm} />
+            <Route component={NoMatchPage} />
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
